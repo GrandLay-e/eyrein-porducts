@@ -1,0 +1,6 @@
+MAIN_URL = "https://www.eyrein-industrie.com/"
+SHOP_URL = "https://boutique.eyrein-industrie.com/"
+BLOCK = ".column.small-12.medium-6.large-4 a"
+REF = ".product--reference span"
+SHEETS = ".accordion-content-bis p a"
+JSON_FILE = "Products.json"
