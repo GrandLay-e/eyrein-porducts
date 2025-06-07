@@ -27,13 +27,13 @@ def get_product(REF, dictionnary_return = False):
         if dictionnary_return:
             return product
         return jsonify(product)
-    return {REF : "Product not Found"} if dictionnary_return else (jsonify({"error": "Not Found"}), 404)
+    return {"Error" : "Product not Found"} if dictionnary_return else (jsonify({"error": "Not Found"}), 404)
 
 # Get only products that my company uses
 @app.route('/products/myproducts/key=<string:key>/', methods=['GET'])
 def get_my_products(key):
     if key == MY_KEY:
-        my_products = [get_product(ref, True) for ref in set(USED_PRODUCTS_REF)]
+        my_products = {ref:get_product(ref, True) for ref in USED_PRODUCTS_REF}
         return jsonify(my_products), 200 
     return jsonify({"Error": "Unauthorized!"}), 401 
 
