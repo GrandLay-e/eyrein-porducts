@@ -7,5 +7,10 @@ __pycache__/functions.cpython-312.pyc
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/.gitignore
 Products.json
-Productss.json
 products.log
+config.py
+__pycache__/config.cpython-312.pyc
+api/__pycache__/api.cpython-312.pyc
+api/__pycache__/config.cpython-312.pyc
+src/__pycache__/functions.cpython-312.pyc
+src/__pycache__/CONST.cpython-312.pyc

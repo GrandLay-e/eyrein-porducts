@@ -11,7 +11,6 @@ def get_page(url, get_url = False):
     with requests.Session() as Session:
         response = Session.get(url)
         if get_url == True:
-            logging.info("URL Geted")
             return response.url
         if response.status_code == 200:
             return BeautifulSoup(response.text, "html.parser")
@@ -20,10 +19,9 @@ def get_page(url, get_url = False):
 
 def get_element(soup, selector):
     try:
-        logging.info("Element geted")
         return soup.select(selector)
     except Exception as e:
-        logging.debug(f"ERROR : {e}")
+        logging.error(f"ERROR : {e}")
 
 def get_all_pages(url):
     soup = get_page(url)
@@ -36,14 +34,13 @@ def save_json(file, new_data):
     try:
         with open(file,"r", encoding='utf-8') as f:
             data = json.load(f)
-            print("SUCCES READING")
             data.extend(new_data)
-    except Exception as e:
-        print(f"Error while reading json file : {file}\n {e}")
+    except FileNotFoundError as e:
+        logging.error(f"Error while reading json file : {file}\n {e}")
         data = new_data
     try:
         with open(file,"w", encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
-            print("SUCCESS WRITING")
     except Exception as e:
-        print(f"Error while writing in json file {file}\n {e}")
+        logging.error(f"Error while writing in json file {file}\n {e}")
+
