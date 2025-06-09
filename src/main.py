@@ -1,9 +1,10 @@
-from functions import *
-from pprint import pprint
-import logging
+from src.functions import *
+from classes.category import Category
+from classes.product import Product
 
+import logging
 logging.basicConfig(
-    filename=LOG_FILE,
+    # filename=LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
@@ -27,7 +28,7 @@ def get_data_from_web():
                 for block in product_blocks:
                     product_url = urljoin(SHOP_URL, block['href'])
                     if product_url in seen_products:
-                        continue  # Skip duplicate product
+                        continue 
                     seen_products.add(product_url)
                     product_page = get_page(session,product_url)
                     product_name = get_element(product_page, TITLE)[0].get_text().strip()
@@ -42,9 +43,9 @@ def get_data_from_web():
                         "Technical Sheet": tech_sheet,
                         "Safety Sheet": safety_sheet
                     })
-                    logging.info(f"{i} - {product_name} added.")
+                    logging.info(f"{product_name}")
             DATA.append(category_data)
     return DATA
-
-DATA = get_data_from_web()
-save_json(JSON_FILE, DATA)
+if __name__ == "__main__":
+    DATA = get_data_from_web()
+    save_json(JSON_FILE, DATA)

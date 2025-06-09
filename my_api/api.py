@@ -1,15 +1,31 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 import json
 
-from config import USED_PRODUCTS_REF, MY_KEY
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-JSON_FILE = "../data/Products.json"
+from my_api.config import USED_PRODUCTS_REF, MY_KEY
+from src.CONST import JSON_FILE
+from src.functions import json_to_object
+
+# from src.rendering.product_html import HTMLProduct
+from src.rendering.category_html import *
+
 app = Flask(__name__)
-try:
-    with open(JSON_FILE, 'r', encoding='utf-8') as f:
-        all_products = json.load(f)
-except (FileNotFoundError, json.JSONDecodeError) as e:
-    all_products = [] 
+if not __name__ == "__main__":
+    JSON_FILE = "data/Products.json"
+
+print("NAME FILE",__name__)
+# try:
+#     with open(JSON_FILE, 'r', encoding='utf-8') as f:
+#         all_products = json.load(f)
+#         print("Bien Pris ! ")
+# except Exception as e:
+#     print("Pas récupèré ! ", e)
+#     all_products = []
+
+all_products = json_to_object(JSON_FILE)
 
 # Get all products
 @app.route('/products/', methods=['GET'])

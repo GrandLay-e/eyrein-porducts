@@ -7,5 +7,5 @@ TITLE = ".product--title"
 SHEETS = ".accordion-content-bis p a"
 
 #Files 
-JSON_FILE = "../data/Products.json"
-LOG_FILE = "../log/products.log"
+JSON_FILE = "data/Products.json"
+LOG_FILE = "log/products.log"
