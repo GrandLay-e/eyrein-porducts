@@ -11,7 +11,7 @@ class Category:
         return{
             "Category Name" : self.name,
             "Category URL" : self.url,
-            "Products" : self.products
+            "Products" : [product.format_product() for product in self.products]
         }
     
     def save_data(self, file, logging):

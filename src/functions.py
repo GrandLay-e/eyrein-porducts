@@ -1,13 +1,15 @@
 import sys
 import os
 
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import requests
 from bs4 import BeautifulSoup
 
+from src.rendering.category_html import HTMLCategory
 from src.classes.category import Category
-from src.classes.product import Product 
+from src.classes.product import Product
 
 import json
 import logging
@@ -46,13 +48,6 @@ def get_all_pages(session, url):
 def save_json(file, new_data):
     data = json_to_object(file)
     data.extend(new_data)
-    # try:
-    #     with open(file,"r", encoding='utf-8') as f:
-    #         data = json.load(f)
-    #         data.extend(new_data)
-    # except Exception as e:
-    #     logging.error(f"Error while reading json file : {file}\n {e}")
-    #     data = new_data
     try:
         with open(file,"w", encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
@@ -84,9 +79,10 @@ def get_data_from_web():
                     product_sheets = get_element(product_page, SHEETS)
                     tech_sheet = product_sheets[0]['href'] if len(product_sheets) > 0 else "Not Found"
                     safety_sheet = product_sheets[1]['href'] if len(product_sheets) > 1 and product_sheets[1].get('href') else "Not Found"
-                    product = Product(product_ref, product_name, product_url, tech_sheet, safety_sheet)
-                    category.products.append(product.format_product())
-                    logging.info(f"{name} --> {product_name}")
+                    image = get_element(product_page, IMG_SRC)[0]['src'] if get_element(product_page, IMG_SRC) else "Not Found"
+                    product = Product(product_ref, product_name, product_url, tech_sheet, safety_sheet, image)
+                    category.products.append(product)
+                    logging.info(f"{name} --> {product_name} Image : {"Pas Trouvé" if image == 'Not Found' else "Trouvé"}")
             DATA.append(category.format_category())
     return DATA
 
@@ -110,11 +106,19 @@ def json_to_object(file):
                 name=prod.get("Name"),
                 url=prod.get("Url"),
                 tech_sheet=prod.get("Tech Sheet"),
-                safety_sheet=prod.get("Safety Sheet")
+                safety_sheet=prod.get("Safety Sheet"),
+                image=prod.get("Image", None)
             )
             category.products.append(product)
         categories.append(category)
     return categories
 
+def format_all_data(data):
+    formatted_data = []
+    for category in data:
+        formatted_data.append(category.format_category())
+    return formatted_data
+
 if __name__ =='__main__':
-    pass
+    data = get_data_from_web()
+    save_json(JSON_FILE, data)
