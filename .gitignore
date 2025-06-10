@@ -1,19 +1,19 @@
-__pycache__/CONST.cpython-312.pyc
-__pycache__/functions.cpython-312.pyc
-.idea/eyrein-porducts.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/inspectionProfiles/profiles_settings.xml
-.idea/.gitignore
-Products.json
-products.log
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE files
+.idea/
+
+# Project files
+*.iml
+*.xml
+*.log
+*.json
+
+# Config files
 config.py
-__pycache__/config.cpython-312.pyc
-api/__pycache__/api.cpython-312.pyc
-api/__pycache__/config.cpython-312.pyc
-src/__pycache__/functions.cpython-312.pyc
-src/__pycache__/CONST.cpython-312.pyc
-src/__pycache__/CONST.cpython-313.pyc
-src/__pycache__/functions.cpython-313.pyc
-api/__pycache__/config.cpython-313.pyc
+
+# Git ignore itself
+.idea/.gitignore
