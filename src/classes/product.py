@@ -18,6 +18,3 @@ class Product:
             "Safety Sheet" : self.safety,
             "Image" : self.image
         }
-
-    def save_product(self):
-        pass

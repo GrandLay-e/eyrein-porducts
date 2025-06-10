@@ -1,10 +1,9 @@
+#for local testing, uncomment the following lines
+# import sys
+# import os
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from flask import Flask, jsonify
-import json
-
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from my_api.config import USED_PRODUCTS_REF, MY_KEY
 from src.CONST import JSON_FILE, CSS_FILE
 from src.functions import json_to_object,format_all_data
@@ -17,14 +16,6 @@ app = Flask(__name__)
 
 with open(CSS_FILE, 'r', encoding='utf-8') as f:
     css_content = f.read()
-print("NAME FILE",__name__)
-# try:
-#     with open(JSON_FILE, 'r', encoding='utf-8') as f:
-#         all_products = json.load(f)
-#         print("Bien Pris ! ")
-# except Exception as e:
-#     print("Pas récupèré ! ", e)
-#     all_products = []
 
 all_products = json_to_object(JSON_FILE)
 formatted_products = format_all_data(all_products)
@@ -57,7 +48,6 @@ def get_product_by_ref(REF, format, dictionnary_return=False):
         if dictionnary_return:
             return product
         if format == "json":
-            print("is json")
             return jsonify(product)
         elif format == "html":
             html_product = HTMLProduct(product['REF'], product['Name'], product['Url'], product['Tech Sheet'], product['Safety Sheet'])
@@ -73,7 +63,6 @@ def get_product_by_ref(REF, format, dictionnary_return=False):
 @app.route('/products/myproducts/key=<string:key>/format=<string:format>/', methods=['GET'])
 def get_my_products_by_key(key, format):
     if key == MY_KEY:
-        print("Key is correct !")
         my_products = {ref: get_product_by_ref(ref, format, True) for ref in USED_PRODUCTS_REF}
         if format == "json":
             return jsonify(my_products), 200 
@@ -100,7 +89,6 @@ def get_my_products_by_key(key, format):
             return html_content + "</div>", 200
         else:
             return jsonify({"error": "Format not supported"}), 400
-    print("Key is incorrect !")
     return jsonify({"Error": "Unauthorized!"}), 401
 
 

@@ -1,8 +1,7 @@
-import sys
-import os
-
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+#for local testing, uncomment the following lines
+# import sys
+# import os
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import requests
 from bs4 import BeautifulSoup
@@ -18,7 +17,7 @@ from urllib.parse import urljoin
 from src.CONST import *
 
 logging.basicConfig(
-    # filename=LOG_FILE,
+    filename=LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
@@ -92,7 +91,7 @@ def json_to_object(file):
             data = json.load(f)
     except Exception as e:
         data = []
-        print("Error :", e)
+        logging.error("Error :", e)
     categories = []
     for cat in data:
         category = Category(
@@ -120,5 +119,4 @@ def format_all_data(data):
     return formatted_data
 
 if __name__ =='__main__':
-    data = get_data_from_web()
-    save_json(JSON_FILE, data)
+    pass
