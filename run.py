@@ -13,5 +13,10 @@ if len(api.all_products) == 0:
         exit(1)
 
 else:
-    print("Server running at http://localhost:8000")
-    api.app.run(debug=True, host='localhost', port=8000)
+    try:
+        print("Server running at http://localhost:8000/products/format=json")
+        app = api.app
+        app.run(debug=True, host='localhost', port=8000)
+    except Exception as e:
+        logging.error(f"An error occurred while starting the server: {e}")
+        exit(1)

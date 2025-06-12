@@ -11,9 +11,8 @@ __pycache__/
 *.xml
 *.log
 *.json
+*.pdf
 
 # Config files
 config.py
 
-# Git ignore itself
-.idea/.gitignore

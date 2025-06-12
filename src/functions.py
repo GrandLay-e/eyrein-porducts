@@ -17,7 +17,7 @@ from urllib.parse import urljoin
 from src.CONST import *
 
 logging.basicConfig(
-    filename=LOG_FILE,
+    # filename=LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
